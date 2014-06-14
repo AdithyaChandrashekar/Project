@@ -1,0 +1,29 @@
+______________________________________________________________________________________
+Logical View
+______________________________________________________________________________________
+
+Foreground Background Separation: Substraction frame differencing
+
+Segmentation: Based on Depth from stereo (row shifting)
+
+object detection: segmentation + thresholding disparity values 
+
+Object tracking: forloop(object detection) + heuristics of object detection
+
+_______________________________________________________________________________________
+
+Physical view:
+_______________________________________________________________________________________
+
+Main_final2: Multiple Object Tracking with occlusion reasoning
+
++Stereo: Compute Disparity from stereo "maxs(disparity)
+
+++Modefilt2: filtered disparity in output
+
++Cluster: moving mask segmentation based on depth.
+
++Moving_Mask1: Substraction algorithm (frame differencing)
+
++Update_background: median of frames for moving background mask
+
