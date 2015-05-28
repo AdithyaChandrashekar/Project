@@ -1,0 +1,94 @@
+/*Adithya Chandrashekar - 1000990558
+kailash Havildar - 1000996588
+*/
+
+
+package weka;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import weka.clusterers.ClusterEvaluation;
+import weka.clusterers.SimpleKMeans;
+import weka.core.Instances;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Remove;
+import weka.filters.unsupervised.instance.RemoveWithValues;
+
+public class attributes2 {
+
+	public static void main(String[] args) throws Exception {
+        // Uploading the arff file 
+		BufferedReader breader = null;
+		breader = new BufferedReader(new FileReader(
+				"/users/kailashhavildar/Desktop/uv.arff"));
+
+		Instances train = new Instances(breader);
+		// The buffer reader is closed
+		breader.close();
+		//train.setClassIndex(train.numAttributes()-1);
+			
+		
+		// Code for a simple K means Cluster
+		SimpleKMeans sk = new SimpleKMeans();
+		sk.setPreserveInstancesOrder(true);
+		sk.setMaxIterations(100);
+		sk.setNumClusters(3);
+		sk.buildClusterer(train);
+		
+
+		//Evaluating the cluster
+		ClusterEvaluation ceval = new ClusterEvaluation();
+		ceval.setClusterer(sk);
+		ceval.evaluateClusterer(train);
+		
+		//System.out.println(ceval.getRevision());
+		System.out.println(ceval.clusterResultsToString());
+	
+		// To view the clusternumber and instancenumber
+		  int[] assignments = sk.getAssignments();
+		  
+		  int i=0; for(int clusterNum : assignments) {
+		  System.out.printf("%d, %d\n", i,clusterNum);
+		  i++;
+		  }
+		 
+	}
+
+}
+
+//References
+// http://slavnik.fe.uni-lj.si/markot/csv2arff/csv2arff.php
+// http://weka.wikispaces.com/Use+WEKA+in+your+Java+code
+
+
+
+OUTPUT for Complete clustering 
+
+kMeans
+======
+
+Number of iterations: 8
+Within cluster sum of squared errors: 3484.8608258980835
+
+Initial staring points (random):
+
+Cluster 0: 'HARTFORD, CT',3/22/2002,3.66,3.05,0.28,0.33,0.33,412.5,1799
+Cluster 1: 'HOUSTON, TX',12/4/2000,3.84,2.19,0.15,0.2,0.09,260.2,331
+Cluster 2: 'ATLANTIC CITY, NJ',10/19/2002,3.65,2.17,0.11,0.23,0.17,288.5,981
+
+Missing values globally replaced with mean/mode
+
+Final cluster centroids:
+                                                           Cluster#
+Attribute                               Full Data                 0                 1                 2
+                                           (1999)             (521)             (581)             (897)
+=======================================================================================================
+city                                  HOUSTON, TX      HARTFORD, CT       HOUSTON, TX ATLANTIC CITY, NJ
+forecast_date                           3/23/2000         3/22/2002         3/23/2000          1/1/2002
+clear_sky_uv_index                         6.0571            7.2121            8.3967             3.871
+uv_index_issued                            4.6847            5.3226            6.9311            2.8592
+percent_probability_clear                  0.2089            0.1283            0.2639            0.2201
+percent_probability_scattered              0.3474            0.3927            0.4033            0.2849
+percent_probability_broken                 0.2206            0.2454            0.1934            0.2238
+total_ozone_amount                        308.316           306.153          288.5491          322.3756
+serialid                                     1000         1715.7735          312.2151         1029.7492

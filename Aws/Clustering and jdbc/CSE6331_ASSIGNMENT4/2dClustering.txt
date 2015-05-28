@@ -1,0 +1,96 @@
+/*Adithya Chandrashekar - 1000990558
+kailash Havildar - 1000996588
+*/
+
+
+package weka;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import weka.clusterers.ClusterEvaluation;
+import weka.clusterers.SimpleKMeans;
+import weka.core.Instances;
+import weka.filters.Filter;
+import weka.filters.unsupervised.attribute.Remove;
+import weka.filters.unsupervised.instance.RemoveWithValues;
+
+public class attributes2 {
+
+	public static void main(String[] args) throws Exception {
+        // Uploading the arff file 
+		BufferedReader breader = null;
+		breader = new BufferedReader(new FileReader(
+				"/users/kailashhavildar/Desktop/uv.arff"));
+
+		Instances train = new Instances(breader);
+		// The buffer reader is closed
+		breader.close();
+		//train.setClassIndex(train.numAttributes()-1);
+		
+		// Retaining fourth and the eigth rows and excluding the rest
+		String[] opt = new String[2];
+		opt[0] = "-R";
+		opt[1] = "1,2,3,5,6,7,9";
+		// 4 and 8
+		Remove remove = new Remove(); 
+		remove.setOptions(opt); 
+		remove.setInputFormat(train);
+		Instances newData = Filter.useFilter(train, remove);
+			
+		
+		// Code for a simple K means Cluster
+		SimpleKMeans sk = new SimpleKMeans();
+		sk.setPreserveInstancesOrder(true);
+		sk.setMaxIterations(100);
+		sk.setNumClusters(3);
+		sk.buildClusterer(newData);
+		
+
+		//Evaluating the cluster
+		ClusterEvaluation ceval = new ClusterEvaluation();
+		ceval.setClusterer(sk);
+		ceval.evaluateClusterer(newData);
+		
+		System.out.println(ceval.getRevision());
+		System.out.println(ceval.clusterResultsToString());
+	
+		// To view the clusternumber and instancenumber
+		  int[] assignments = sk.getAssignments();
+		  
+		  int i=0; for(int clusterNum : assignments) {
+		  System.out.printf("%d\n", clusterNum);
+		  i++;
+		  }
+		 
+	}
+
+}
+
+//References
+// http://slavnik.fe.uni-lj.si/markot/csv2arff/csv2arff.php
+// http://weka.wikispaces.com/Use+WEKA+in+your+Java+code
+
+
+OUTPUT for 2D Clustering
+
+kMeans
+======
+
+Number of iterations: 16
+Within cluster sum of squared errors: 42.91983579099385
+
+Initial staring points (random):
+
+Cluster 0: 3.05,412.5
+Cluster 1: 2.19,260.2
+Cluster 2: 2.17,288.5
+
+Missing values globally replaced with mean/mode
+
+Final cluster centroids:
+                                  Cluster#
+Attribute             Full Data          0          1          2
+                         (1999)      (355)      (836)      (808)
+================================================================
+uv_index_issued          4.6847     1.7389     2.9497     7.7741
+total_ozone_amount      308.316   374.0256   291.4346   296.9124

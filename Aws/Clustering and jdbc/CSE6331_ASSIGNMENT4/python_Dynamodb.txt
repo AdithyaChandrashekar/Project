@@ -1,0 +1,45 @@
+'''
+Aditya Chandrashekar- 1000990558
+Kailash Havildar - 1000996588
+'''
+import boto.dynamodb
+import timeit
+import csv
+
+access_key ='AKIAI4NXMQ76CEBRJ3JA'
+secret_key ='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'
+
+conn = boto.dynamodb.connect_to_region(
+                                       'us-west-2',
+                                       aws_access_key_id = access_key,
+                                       aws_secret_access_key = secret_key)
+
+
+# the table is created in dynamodb before manually
+table = conn.get_table('UltraViolet')
+#the csv file present in ec2 instance is read to the table
+csv_data = csv.reader(file('uv.csv'))
+
+for row in csv_data:
+item_data = {
+        'city': row[0],
+        'forecast': row[1],
+        'clear_sky': row[2],
+        'uv_index': row[3],
+        'percent_probability_clear': row[4],
+        'percent_probability_scattered': row[5],
+        'percent_probability_broken':row[6],
+        'total_ozone_amount':row[7]
+     }
+    item = table.new_item(
+        #specify the primary key 'Event-id'
+        hash_key = row[8],
+        #insert the other attributes
+        attrs=item_data
+        )
+
+    item.put()
+
+References
+1. http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html
+2. http://stackoverflow.com/questions/11388014/using-scp-to-copy-a-file-to-amazon-ec2-instance

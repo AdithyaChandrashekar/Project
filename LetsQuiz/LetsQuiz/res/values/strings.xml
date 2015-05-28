@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">LetsQuiz</string>
+    <string name="hello_world"></string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_database">DatabaseActivity</string>
+    <string name="prev_text_string">&lt;&lt; Prev &lt;&lt;</string>
+    <string name="next_text_string">&gt;&gt; Next &gt;&gt;</string>
+    <string name="answer_option">Choose correct answer</string>
+ 
+    <string-array name="option_array">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+    </string-array>
+
+</resources>

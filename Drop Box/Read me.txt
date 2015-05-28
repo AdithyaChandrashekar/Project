@@ -1,0 +1,36 @@
+CSE 6331 Cloud Computing 
+Assignment 1
+Adithya Chandrashekar
+1000990558
+
+The softwares used for the assignment are:
+1) Python 3.4.1
+2) gpg4win
+3) Updating the setup tools by using command pip install -U setuptools
+3) Gnupg by using command pip install python-gnupg.
+4) Dropbox sdk by using command pip install dropbox.
+5) Watchdog by using command pip install watchdog.
+
+Program walk through:
+1) All the necessary API's are imported.
+2) It checks for the equality of if statement and asks to drop a file. Once the file is  
+   dropped it calls the Myhandler class.
+3) Class called Myhandler is defined which uses FileSystemEventHandler API to monitor 
+   the folder for changes.
+4) Inside the class on_modified method is specified in order to check for the modifications in
+   the folder.
+5) Then the path is specified to store the keys generated.
+6) The key parameter for both public key and private key are mentioned.
+7) Then the access token is verified to upload to the dropbox.
+8) Then the file to be encrypted is dropped into the folder.
+9) The file is encrpted and then uploaded to the dropbox.
+10) Then the same file is opened verified with the private passphares and checked for 
+   digital signature and then decrypted.
+
+References:
+https://pythonhosted.org/python-gnupg/
+https://www.dropbox.com/developers/core/start/python
+https://gist.github.com/vsajip/922267
+http://en.wikipedia.org/wiki/Digital_signature
+http://pip.readthedocs.org/en/latest/installing.html
+http://stackoverflow.com/questions/18599339/python-watchdog-monitoring-file-for-changes?rq=1
